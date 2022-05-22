@@ -20,8 +20,11 @@ from push.push import push_server
 def daka_job():
     logger.info("执行定时打卡任务")
     studentList=loadConfig('config.yaml','student')
-    _pushMsg=push_server()
+    
     for student in studentList:
+        _pushMsg=push_server()
+        if(student.get('channel')):
+            _pushMsg.set_personal_config(student['channel'])
         _daka = daka.daka(student['studentID'], student['password'])
         msg,success=_daka.autoDaka()
         _pushMsg.pushMessage(msg,'健康打卡通知',success)

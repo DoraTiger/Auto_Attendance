@@ -44,6 +44,8 @@
 
     TODO：待研究 `Telegram BOT` , `Discord BOT` , `feishu WebHooks`，…… 。
 
+3. 在 `student` 中可为每个账户单独配置推送通道，自动覆盖对应通道的全局设置。***需要完整配置，只配置部分文件会报错***
+
 ## 执行
 
 ### 配置环境

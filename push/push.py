@@ -11,6 +11,8 @@ from push.push_email import push_email
 
 class push_server():
     def __init__(self,debug=False):
+
+        self.debug=debug
         # get push config
         self.config=loadConfig("config.yaml","config")["push"]
         logger.debug('config:'+str(self.config))
@@ -23,18 +25,27 @@ class push_server():
             self.sendMsgOnlyError=False
 
         # get channel config
-        self.channelList=self.config['channel']
+        if(self.config.get('channel') is None):
+            self.channelList={}
+        else:
+            self.channelList=self.config['channel']
         logger.debug('channelList:'+str(self.channelList))
+
+    def set_personal_config(self,personal_config):
+        if(self.debug):
+            print(personal_config)
+        for channel in personal_config:
+            self.channelList.update({channel:personal_config[channel]})
 
     def pushMessage(self, message,title='推送服务测试标题',success=True):
         if success and self.sendMsgOnlyError==True:
             pass
         else:
-            if(self.channelList["mail"].get('enable')==True):
+            if(self.channelList.get('mail') and self.channelList["mail"].get('enable')==True):
                 logger.debug(self.channelList["mail"])
                 pushObj=push_email(get_email_config(self.channelList["mail"]))
                 pushObj.pushMessage(message,title)
-            if(self.channelList["serverChan"].get('enable')==True):
+            if(self.channelList.get('serverChan') and self.channelList["serverChan"].get('enable')==True):
                 logger.debug(self.channelList["serverChan"])
                 pushObj=push_serverchan(self.channelList["serverChan"].get('sckey',''))
                 pushObj.pushMessage(message,title)

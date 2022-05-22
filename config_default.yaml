@@ -2,6 +2,10 @@ student:
   -
     studentID: ''
     password: ''
+    channel:
+      serverChan:
+        enable: False
+        sckey: 
   -
     studentID: ''
     password: ''
