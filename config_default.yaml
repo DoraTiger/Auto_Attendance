@@ -1,0 +1,29 @@
+student:
+  -
+    studentID: ''
+    password: ''
+  -
+    studentID: ''
+    password: ''
+
+config:
+  trigger:
+    enable: False
+    cron: "40 7,12,19 * * * " # 分 时 天 周 月
+  log: 
+    level: INFO # DEBUG,INFO,WARNING,ERROR,CRITICAL
+    file: logs/error.log # Adapter For Baota Panel
+  push:
+    global:
+      sendMsgOnlyError: True
+    channel:
+      mail:
+        enable: False
+        receiver: ''
+        sender: ''
+        password: ''
+        host: ''
+        port: ''
+      serverChan:
+        enable: False
+        sckey: ''
