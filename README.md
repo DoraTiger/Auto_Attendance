@@ -31,7 +31,7 @@
 4. 什么值得买签到任务
    1. 将 `smzdm:enable:` 设置为 `True` 开启任务。 
    2. 在 `smzdm:account:` 中添加cookie，多个账户用 `-` 隔开。
-        > cookie的获取方法为，浏览器登录[阿童木](https://www.smzdm.com/)，`F12` 打开调试控制台，在网络中找到`www.smzdm.com`，在标头-请求标头中找到cookie一项，复制全部内容即可。   
+        > cookie的获取方法为，浏览器登录[什么值得买](https://www.smzdm.com/)，`F12` 打开调试控制台，在网络中找到`www.smzdm.com`，在标头-请求标头中找到cookie一项，复制全部内容即可。   
 
 ### 配置定时任务
 
