@@ -1,19 +1,18 @@
-student:
-  -
-    studentID: ''
-    password: ''
-    channel:
-      serverChan:
-        enable: False
-        sckey: 
-  -
-    studentID: ''
-    password: ''
-
-config:
+NEU_Health:
+  enable: False
   trigger:
     enable: False
     cron: "40 7,12,19 * * * " # 分 时 天 周 月
+  account:
+    -
+      studentID: ''
+      password: 
+      channel:
+        serverChan:
+          enable: False
+          sckey: 
+
+config:
   log: 
     level: INFO # DEBUG,INFO,WARNING,ERROR,CRITICAL
     file: logs/error.log # Adapter For Baota Panel
@@ -30,4 +29,4 @@ config:
         port: ''
       serverChan:
         enable: False
-        sckey: ''
+        sckey: 

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 
 import time
-from datetime import datetime
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -18,34 +17,44 @@ from push.push import push_server
 
 
 def daka_job():
-    logger.info("执行定时打卡任务")
-    studentList=loadConfig('config.yaml','student')
+    logger.info("执行任务:"+daka.__name__)
+    accountList=loadConfig('config.yaml','NEU_Health')['account']
     
-    for student in studentList:
+    for account in accountList:
         _pushMsg=push_server()
-        if(student.get('channel')):
-            _pushMsg.set_personal_config(student['channel'])
-        _daka = daka.daka(student['studentID'], student['password'])
+        if(account.get('channel')):
+            _pushMsg.set_personal_config(account['channel'])
+        _daka = daka.daka(account['studentID'], account['password'])
         msg,success=_daka.autoDaka()
         _pushMsg.pushMessage(msg,'健康打卡通知',success)
 
-
+def add_or_excute_job(scheduler,job_config,job_func,job_name=''):
+    if(job_name==''):
+        job_name=job_func.__name__
+    if(job_config['trigger']['enable']):
+        logger.info(job_name+"计划启用,添加定时任务")
+        trigger=CronTrigger.from_crontab(job_config['trigger']['cron'],timezone=job_config['trigger'].get('timezone','Asia/Shanghai'))
+        scheduler.add_job(job_func,trigger,id=job_name,name=job_name)
+    else:
+        logger.info(job_name+"计划未启用,不添加定时任务，单次执行")
+        job_func()
 
 if __name__ == '__main__':
-    triggerConfig=loadConfig('config.yaml','config')['trigger']
-    if(triggerConfig.get('enable')):
-        logger.info("打卡计划启用,开启自动打卡")
-        scheduler = BackgroundScheduler(jobstores={'default': MemoryJobStore()}, executors={'default': ThreadPoolExecutor(20)})
-        scheduler.add_job(daka_job, CronTrigger.from_crontab(triggerConfig['cron']), id='daka_job', max_instances=1, misfire_grace_time=60)
+    scheduler = BackgroundScheduler(jobstores={'default': MemoryJobStore()}, executors={'default': ThreadPoolExecutor(20)})
+    config=loadConfig('config.yaml')
+
+    # add jobs
+    if(config['NEU_Health']['enable']):
+        add_or_excute_job(scheduler,config['NEU_Health'],daka_job,'东北大学健康打卡')
+    
+    # start scheduler
+    if(scheduler.get_jobs()):
+        logger.info("启动定时任务")
         scheduler.start()
-        logger.info("打卡计划启动成功")
         try:
             while True:
                 time.sleep(2)
         except (KeyboardInterrupt, SystemExit):
             scheduler.shutdown()
-            logger.info("打卡计划关闭成功")
-    else:
-        logger.info("打卡计划未启用,单次调用任务")
-        daka_job()
+            logger.info("定时任务关闭成功")
 
