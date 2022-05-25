@@ -84,28 +84,50 @@
 ## 执行
 
 ### 配置环境
-项目基于 `python 3.8.5` 开发，相关依赖已经保存在 `requirements.txt` 文件中，可以通过下列命令进行安装。**（建议使用conda虚拟环境进行环境隔离）**
-```python
-pip install -r requirements.txt
-```
+1. 项目基于 `python 3.8.5` 开发，相关依赖已经保存在 `requirements.txt` 文件中，可以通过下列命令进行安装。**（建议使用conda虚拟环境进行环境隔离）**
+   ```shell
 
-### 命令行启动
+   pip install -r requirements.txt
+   ```
+2. 如果使用默认目录设置，需要手动创建`logs`目录。
+   ```shell
+   mkdir logs
+   ```
 
-```python
-python ./main.py
-```
 
-### 通过宝塔面板启动
+### 启动
 
-参考个人博客（未发布）。
+1. 命令行运行
+   ```python
+   python ./main.py
+   ```
+2. 后台运行（通过Screen实现）
+   ```shell
+   # install shell
+   # for ubuntu
+   sudo apt install screen
+   # for centos
+   sudo yum install screen
 
-### 通过github action启动
+   # support for conda
+   # if not use conda，skip this
+   source deactive
 
-TODO：待开发。
+   # background
+   screen -S AutoAttendance
 
-### 通过腾讯云函数自动部署启动
+   # support for conda
+   # if not use conda，skip this
+   source activate your_conda_env
 
-TODO：待开发，目前可参考 [NEU_health_daka](https://github.com/Bmaili/NEU_health_daka)手动部署。
+   python ./main.py
+   ``` 
+3. 通过宝塔面板运行
+   > 参考个人博客（未发布）。
+4. 通过`github action`运行
+   > TODO 待开发。
+5. 通过腾讯云函数自动部署运行
+   > TODO 待开发，目前可参考 [NEU_health_daka](https://github.com/Bmaili/NEU_health_daka)手动部署。
 
 # 其他
 
