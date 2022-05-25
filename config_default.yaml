@@ -35,6 +35,18 @@ hdatmos:
         serverChan:
           enable: False
           sckey: 
+smzdm:
+  enable: False
+  trigger:
+    enable: False
+    cron: "30 0 * * * " # 分 时 天 周 月
+  account:
+    -
+      cookies: ""
+      channel:
+        serverChan:
+          enable: False
+          sckey: 
 config:
   log: 
     level: INFO # DEBUG,INFO,WARNING,ERROR,CRITICAL

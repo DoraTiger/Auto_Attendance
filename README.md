@@ -9,7 +9,7 @@
 
 ## 配置文件
 
-本项目支持不同任务，每个任务有单独配置信息，并共享全局推送设置。
+本项目支持不同任务，每个任务有单独配置信息，并共享全局推送设置。配置文件使用YMAL格式，相关语法请参考官方文档。
 
 首先将`config_default.yaml`复制为`config.yaml`，随后在其中配置任务信息，`config.yaml`文件的修改不会被同步。
 
@@ -19,20 +19,19 @@
 
 1. 健康打卡任务
    1. 将 `NEU_Health:enable:`设置为 `True` 开启任务。
-   2. 在 `NEU_Health:account:` 中添加学号、密码，多个账户用 `-` 隔开，如有报错，yaml语法请参考官方文档。
-
+   2. 在 `NEU_Health:account:` 中添加学号、密码，多个账户用 `-` 隔开。
 2. 猫站签到任务
    1. 将 `pterclub:enable:` 设置为 `True` 开启任务。 
-   2. 在 `pterclub:account:` 中添加cookie，如有报错，yaml语法请参考官方文档。
-
-        cookie的获取方法为，浏览器登录[猫站](https://pterclub.com/)，`F12` 打开调试控制台，在网络中找到`index.php`，在标头-请求标头中找到cookie一项，复制全部内容即可。
-
+   2. 在 `pterclub:account:` 中添加cookie，多个账户用 `-` 隔开。
+      > cookie的获取方法为，浏览器登录[猫站](https://pterclub.com/)，`F12` 打开调试控制台，在网络中找到`index.php`，在标头-请求标头中找到cookie一项，复制全部内容即可。
 3. 阿童木签到任务
    1. 将 `hdatmos:enable:` 设置为 `True` 开启任务。 
-   2. 在 `hdatmos:account:` 中添加cookie，如有报错，yaml语法请参考官方文档。
-
-        cookie的获取方法为，浏览器登录[阿童木](https://hdatmos.com/)，`F12` 打开调试控制台，在网络中找到`index.php`，在标头-请求标头中找到cookie一项，复制全部内容即可。
-
+   2. 在 `hdatmos:account:` 中添加cookie，多个账户用 `-` 隔开。
+        > cookie的获取方法为，浏览器登录[阿童木](https://hdatmos.com/)，`F12` 打开调试控制台，在网络中找到`index.php`，在标头-请求标头中找到cookie一项，复制全部内容即可。
+4. 什么值得买签到任务
+   1. 将 `smzdm:enable:` 设置为 `True` 开启任务。 
+   2. 在 `smzdm:account:` 中添加cookie，多个账户用 `-` 隔开。
+        > cookie的获取方法为，浏览器登录[阿童木](https://www.smzdm.com/)，`F12` 打开调试控制台，在网络中找到`www.smzdm.com`，在标头-请求标头中找到cookie一项，复制全部内容即可。   
 
 ### 配置定时任务
 
@@ -42,16 +41,18 @@
    1. 将 `NEU_Health:trigger:enable:` 设置为 `True` 则开启定时任务，反之任务只执行一次。 
    2. 在 `NEU_Health:trigger:cron:` 中配置任务定时计划，语法请参考cron相关文档。
    3. 在 `NEU_Health:trigger:timezone:` 中配置时区，默认为 `Asia/Shanghai`。
-
 2. 猫站签到任务
    1. 将 `pterclub:trigger:enable:` 设置为 `True` 则开启定时任务，反之任务只执行一次。 
    2. 在 `pterclub:trigger:cron:` 中配置任务定时计划，语法请参考cron相关文档。
    3. 在 `pterclub:trigger:timezone:` 中配置时区，默认为 `Asia/Shanghai`。
-
-2. 阿童木签到任务
+3. 阿童木签到任务
    1. 将 `hdatmos:trigger:enable:` 设置为 `True` 则开启定时任务，反之任务只执行一次。 
    2. 在 `hdatmos:trigger:cron:` 中配置任务定时计划，语法请参考cron相关文档。
    3. 在 `hdatmos:trigger:timezone:` 中配置时区，默认为 `Asia/Shanghai`。
+4. 什么值得买签到任务
+   1. 将 `smzdm:trigger:enable:` 设置为 `True` 则开启定时任务，反之任务只执行一次。 
+   2. 在 `smzdm:trigger:cron:` 中配置任务定时计划，语法请参考cron相关文档。
+   3. 在 `smzdm:trigger:timezone:` 中配置时区，默认为 `Asia/Shanghai`。
 ### 配置日志
 
 日志配置为所有任务的共享配置，不可修改。
@@ -88,7 +89,7 @@
 pip install -r requirements.txt
 ```
 
-#### 命令行启动
+### 命令行启动
 
 ```python
 python ./main.py

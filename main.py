@@ -13,7 +13,7 @@ from apscheduler.triggers.cron import CronTrigger
 from job.daka import daka
 from job.pterclub import pterclub
 from job.hdatmos import hdatmos
-
+from job.smzdm import smzdm
 # import project utils
 from common.basicLog import logger
 from common.basicUtils import loadConfig
@@ -29,8 +29,10 @@ def daka_job():
         _pushMsg = push_server()
         if(account.get('channel')):
             _pushMsg.set_personal_config(account['channel'])
-        _daka = daka(account['studentID'], account['password'])
-        msg, success = _daka.autoDaka()
+
+        _jobObj = daka(account['studentID'], account['password'])
+        msg, success = _jobObj.autoDaka()
+
         _pushMsg.pushMessage(msg, '健康打卡通知', success)
 
 
@@ -42,9 +44,11 @@ def pterclub_job():
         _pushMsg = push_server()
         if(account.get('channel')):
             _pushMsg.set_personal_config(account['channel'])
-        _pterclub = pterclub()
-        _pterclub.update_cookies(account['cookies'])
-        msg, success = _pterclub.attendance()
+
+        _jobObj = pterclub()
+        _jobObj.update_cookies(account['cookies'])
+        msg, success = _jobObj.attendance()
+
         _pushMsg.pushMessage(msg, '猫站签到通知', success)
 
 def hdatmos_job():
@@ -55,11 +59,27 @@ def hdatmos_job():
         _pushMsg = push_server()
         if(account.get('channel')):
             _pushMsg.set_personal_config(account['channel'])
-        _hdatmos = hdatmos()
-        _hdatmos.update_cookies(account['cookies'])
-        msg, success = _hdatmos.attendance()
+
+        _jobObj = hdatmos()
+        _jobObj.update_cookies(account['cookies'])
+        msg, success = _jobObj.attendance()
+
         _pushMsg.pushMessage(msg, '阿童木签到通知', success)
 
+def smzdm_job():
+    logger.info("执行任务:"+smzdm.__name__)
+    accountList = loadConfig('config.yaml', 'smzdm')['account']
+
+    for account in accountList:
+        _pushMsg = push_server()
+        if(account.get('channel')):
+            _pushMsg.set_personal_config(account['channel'])
+
+        _jobObj = smzdm()
+        _jobObj.update_cookies(account['cookies'])
+        msg, success = _jobObj.attendance()
+        
+        _pushMsg.pushMessage(msg, '什么值得买签到通知', success)
 
 def add_or_excute_job(scheduler, job_config, job_func, job_name=''):
     if(job_name == ''):
@@ -89,6 +109,9 @@ if __name__ == '__main__':
     if(config['hdatmos']['enable']):
         add_or_excute_job(
             scheduler, config['hdatmos'], hdatmos_job, '阿童木签到')
+    if(config['smzdm']['enable']):
+        add_or_excute_job(
+            scheduler, config['smzdm'], smzdm_job, '什么值得买签到')
 
     # start scheduler
     if(scheduler.get_jobs()):
