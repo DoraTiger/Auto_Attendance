@@ -21,6 +21,11 @@
    1. 将 `NEU_Health:enable:`设置为 `True` 开启任务。
    2. 在 `NEU_Health:account:` 中添加学号、密码，多个账户用 `-` 隔开，如有报错，yaml语法请参考官方文档。
 
+2. 猫站签到任务
+   1. 将 `pterclub:enable:` 设置为 `True` 开启任务。 
+   2. 在 `pterclub:account:` 中添加cookie，如有报错，yaml语法请参考官方文档。
+
+        cookie的获取方法为，浏览器登录[猫站](https://pterclub.com/)，`F12` 打开调试控制台，在网络中找到`index.php`，在标头-请求标头中找到cookie一项，复制全部内容即可。
 ### 配置定时任务
 
 所有任务均具有自己的定时配置：
@@ -30,6 +35,10 @@
    2. 在 `NEU_Health:trigger:cron:` 中配置任务定时计划，语法请参考cron相关文档。
    3. 在 `NEU_Health:trigger:timezone:` 中配置时区，默认为 `Asia/Shanghai`。
 
+2. 猫站签到任务
+   1. 将 `pterclub:trigger:enable:` 设置为 `True` 则开启定时任务，反之任务只执行一次。 
+   2. 在 `pterclub:trigger:cron:` 中配置任务定时计划，语法请参考cron相关文档。
+   3. 在 `pterclub:trigger:timezone:` 中配置时区，默认为 `Asia/Shanghai`。
 ### 配置日志
 
 日志配置为所有任务的共享配置，不可修改。
