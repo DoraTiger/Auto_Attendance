@@ -11,7 +11,15 @@
 
 本项目支持不同任务，每个任务有单独配置信息，并共享全局推送设置。配置文件使用YMAL格式，相关语法请参考官方文档。
 
-首先将`config_default.yaml`复制为`config.yaml`，随后在其中配置任务信息，`config.yaml`文件的修改不会被同步。
+首先下载项目，然后将`config_default.yaml`复制为`config.yaml`，随后在其中配置任务信息，`config.yaml`文件的修改不会被同步。
+
+```shell
+# 国内环境可以尝试使用 https://ghproxy.com
+git clone https://github.com/DoraTiger/Auto_Attendance
+
+cd Auto_Attendance
+cp config_default.yaml config.yaml
+```
 
 ### 配置任务信息
 
