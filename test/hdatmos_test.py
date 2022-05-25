@@ -14,7 +14,7 @@ def test_hdatmos():
         _test=hdatmos(True)
         _test.update_cookies(account.get('cookies'))
         msg,success=_test.attendance()
-        print(success,msg)
+        print(msg,success)
         logger.debug(msg)
         break
 

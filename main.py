@@ -55,9 +55,9 @@ def hdatmos_job():
         _pushMsg = push_server()
         if(account.get('channel')):
             _pushMsg.set_personal_config(account['channel'])
-        _pterclub = hdatmos()
-        _pterclub.update_cookies(account['cookies'])
-        msg, success = _pterclub.attendance()
+        _hdatmos = hdatmos()
+        _hdatmos.update_cookies(account['cookies'])
+        msg, success = _hdatmos.attendance()
         _pushMsg.pushMessage(msg, '阿童木签到通知', success)
 
 
