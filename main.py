@@ -21,6 +21,7 @@ from common.basicUtils import loadConfig
 # import project push server
 from push.push import push_server
 
+
 def daka_job():
     logger.info("执行任务:"+daka.__name__)
     accountList = loadConfig('config.yaml', 'NEU_Health')['account']
@@ -51,6 +52,7 @@ def pterclub_job():
 
         _pushMsg.pushMessage(msg, '猫站签到通知', success)
 
+
 def hdatmos_job():
     logger.info("执行任务:"+hdatmos.__name__)
     accountList = loadConfig('config.yaml', 'hdatmos')['account']
@@ -66,6 +68,7 @@ def hdatmos_job():
 
         _pushMsg.pushMessage(msg, '阿童木签到通知', success)
 
+
 def smzdm_job():
     logger.info("执行任务:"+smzdm.__name__)
     accountList = loadConfig('config.yaml', 'smzdm')['account']
@@ -78,8 +81,9 @@ def smzdm_job():
         _jobObj = smzdm()
         _jobObj.update_cookies(account['cookies'])
         msg, success = _jobObj.attendance()
-        
+
         _pushMsg.pushMessage(msg, '什么值得买签到通知', success)
+
 
 def add_or_excute_job(scheduler, job_config, job_func, job_name=''):
     if(job_name == ''):
