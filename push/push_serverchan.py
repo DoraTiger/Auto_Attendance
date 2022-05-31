@@ -1,8 +1,8 @@
 # Server酱发送依赖
-from asyncio.log import logger
-from urllib import response
 import requests
 
+# 日志服务
+from common.basicLog import logger
 
 class push_serverchan():
     def __init__(self, sckey):
