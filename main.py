@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import time
 
 # import apscheduler
@@ -88,22 +86,18 @@ def smzdm_job():
 def add_or_excute_job(scheduler, job_config, job_func, job_name=''):
     if(job_name == ''):
         job_name = job_func.__name__
-    if(job_config['trigger']['enable']):
+    if(scheduler and job_config['trigger']['enable']):
         logger.info(job_name+"计划启用,添加定时任务")
         trigger = CronTrigger.from_crontab(
             job_config['trigger']['cron'], timezone=job_config['trigger'].get('timezone', 'Asia/Shanghai'))
         scheduler.add_job(job_func, trigger, id=job_name, name=job_name)
     else:
-        logger.info(job_name+"计划未启用,不添加定时任务，单次执行")
+        logger.info(job_name+"计划未启用/云函数模式,不添加定时任务，单次执行")
         job_func()
 
 
-if __name__ == '__main__':
-    scheduler = BackgroundScheduler(jobstores={'default': MemoryJobStore()}, executors={
-                                    'default': ThreadPoolExecutor(20)})
+def job_handler(scheduler):
     config = loadConfig('config.yaml')
-
-    # add jobs
     if(config['NEU_Health']['enable']):
         add_or_excute_job(
             scheduler, config['NEU_Health'], daka_job, '东北大学健康打卡')
@@ -117,8 +111,20 @@ if __name__ == '__main__':
         add_or_excute_job(
             scheduler, config['smzdm'], smzdm_job, '什么值得买签到')
 
+# support for serverless
+def main_handler(event, context):
+    job_handler(None)
+
+if __name__ == '__main__':
+    scheduler = BackgroundScheduler(
+        jobstores={'default': MemoryJobStore()},
+        executors={'default': ThreadPoolExecutor(20)}
+    )
+
+    job_handler(scheduler)
+
     # start scheduler
-    if(scheduler.get_jobs()):
+    if(scheduler and scheduler.get_jobs()):
         logger.info("启动定时任务")
         scheduler.start()
         try:

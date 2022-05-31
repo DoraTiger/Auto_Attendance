@@ -13,3 +13,9 @@ config.yaml
 
 ### log files ###
 *.log
+
+### Serverless directories ###
+.serverless
+.env_temp
+### nodejs ###
+node_modules/
