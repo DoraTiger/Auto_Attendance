@@ -5,6 +5,7 @@ sys.path.append(dirname(dirname(abspath(__file__))))
 from push.push import push_server
 from push.push_serverchan import push_serverchan
 from push.push_email import push_email
+from push.push_discord import push_discord
 
 
 def test_push_server():
@@ -25,7 +26,11 @@ def test_push_email():
         465)
     pushObj.pushMessage("test message","test title")
 
+def test_push_discord():
+    pushObj=push_discord("your own discord webhook")
+    pushObj.pushMessage("test message","test title")
 if __name__ == '__main__':
     # test_push_server()
     # test_push_serverchan()
-    test_push_email()
+    # test_push_email()
+    test_push_discord()

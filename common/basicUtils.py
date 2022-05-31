@@ -1,6 +1,6 @@
 import yaml
 
-def loadConfig(filename,configname=''):
+def loadConfig(filename, configname=''):
     config = ""
     with open(filename, "r", encoding='utf-8') as config_file:
         config = yaml.load(config_file, Loader=yaml.FullLoader)
@@ -10,8 +10,17 @@ def loadConfig(filename,configname=''):
         return config
 
 
-# def loadStudent():
-#     studentList = ""
-#     with open("config.yaml", "r", encoding='utf-8') as config_file:
-#         studentList = yaml.load(config_file, Loader=yaml.FullLoader)['student']
-#     return studentList
+def getProxies():
+    proxyConfig = loadConfig("config.yaml", "config")["proxy"]
+    enablePrxies = proxyConfig.get('enable', False)
+    protocol = proxyConfig.get('protocol', 'http')
+    addr = proxyConfig.get('addr', '')
+    proxies = {
+        'http': None,
+        'https': None
+    }
+    if(enablePrxies and addr != ''):
+        proxies['http'] = protocol+'://'+addr
+        proxies['https'] = protocol+'://'+addr
+
+    return proxies

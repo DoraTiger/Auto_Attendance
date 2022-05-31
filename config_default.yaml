@@ -48,6 +48,10 @@ smzdm:
           enable: False
           sckey: 
 config:
+  proxy:
+    enable: False
+    addr: "127.0.0.1:1080"
+    protocol: http # http/socks4/socks5
   log: 
     level: INFO # DEBUG,INFO,WARNING,ERROR,CRITICAL
     file: logs/error.log # Adapter For Baota Panel
@@ -65,3 +69,6 @@ config:
       serverChan:
         enable: False
         sckey: 
+      discord:
+        enable: False
+        webhook: 
