@@ -68,6 +68,13 @@ cp config_default.yaml config.yaml
 1. 在 `config:log:level:` 中配置日志级别。
 2. 在 `config:log:file:` 中配置日志保存路径，默认路径 `logs/error.log` 是为了适配宝塔面板的python项目管理器。
 
+### 配置代理
+
+由于众所周知的原因，部分服务无法直接访问，需要配置代理。
+
+1. 将 `config:proxy:` 中配置代理，设置 `enable` 为 `True` 后开启代理，目前只支持Discord推送服务。
+2. 在 `config:proxy:addr` 和 `config:proxy:protocol` 中配置代理地址和协议。
+
 ### 配置推送
 
 推送服务支持全局设置和分任务账户单独配置。
@@ -77,15 +84,21 @@ cp config_default.yaml config.yaml
 
     1. 邮件推送
 
-        自行配置SMTP服务器，不推荐使用免费的**阿里云邮箱**，经测试会被当做垃圾邮件拒收。
+         > 自行配置SMTP服务器，不推荐使用免费的**阿里云邮箱**，经测试会被当做垃圾邮件拒收。
 
-    1. ServerChan推送
+    2. ServerChan推送
 
-        自行在 [ServerChan官网](https://sct.ftqq.com/) 注册并获取sckey。
+         > 自行在 [ServerChan官网](https://sct.ftqq.com/) 注册并获取sckey。
 
-    2. 其他推送
+    3. Discord BOT 推送
+
+         >  1. 创建Discord频道
+         >  2. 服务设置-整合-Webhook-新webhook
+         >  3. 复制webhook URL
+
+    4. 其他推送
    
-        TODO：待研究 `Telegram BOT` , `Discord BOT` , `feishu WebHooks`，…… 。
+        > TODO：待研究 `Telegram BOT` , `feishu WebHooks`，…… 。
 
 3. 在每个任务配置的 `account` 中可为每个账户单独配置推送通道，自动覆盖对应通道的全局设置。 **（需要完整配置，只配置部分文件会报错）**
 
@@ -94,7 +107,6 @@ cp config_default.yaml config.yaml
 ### 配置环境
 1. 项目基于 `python 3.8.5` 开发，相关依赖已经保存在 `requirements.txt` 文件中，可以通过下列命令进行安装。**（建议使用conda虚拟环境进行环境隔离）**
    ```shell
-
    pip install -r requirements.txt
    ```
 2. 如果使用默认目录设置，需要手动创建`logs`目录。
