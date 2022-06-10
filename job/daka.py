@@ -86,7 +86,7 @@ class daka():
                 msg = self.studentID+'健康打卡成功!'
                 success = True
             else:
-                msg = self.studentID+'健康打卡失败！请手动完成打卡！'+health_response.status_code
+                msg = self.studentID+'健康打卡失败！请手动完成打卡！'+ str(health_response.status_code)
                 success =  False
         except(Exception) as e:
             logger.error(e)
