@@ -82,7 +82,7 @@ class daka():
             health_response = self.my_session.post(self.note_url, health_items)
             logger.debug(health_response.status_code)
 
-            if health_response.status_code == 200:
+            if health_response.status_code == 201:
                 msg = self.studentID+'健康打卡成功!'
                 success = True
             else:
